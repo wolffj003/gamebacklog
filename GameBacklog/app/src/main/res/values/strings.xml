@@ -4,4 +4,16 @@
     <!--  Menu  -->
     <string name="menuDelete">Delete backlog.</string>
 
+    <!--  Cards  -->
+    <string name="gameTitle">Title of game</string>
+    <string name="gamePlatform">Platform of game</string>
+    <string name="gameReleaseDate">Release date of game</string>
+
+    <string name="tiletHintGameTitle">Enter game title.</string>
+    <string name="tiletHintGamePlatform">Enter game Platform.</string>
+
+    <string name="tiletHintGameDateDay">Day</string>
+    <string name="tiletHintGameDateMonth">Month</string>
+    <string name="tiletHintGameDateYear">Year</string>
+
 </resources>
