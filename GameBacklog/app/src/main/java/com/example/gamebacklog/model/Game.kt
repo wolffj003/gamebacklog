@@ -5,7 +5,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
-import java.util.*
 
 @Parcelize
 @Entity(tableName = "gameBacklogTable")
@@ -15,7 +14,7 @@ data class Game(
     @ColumnInfo(name = "platform")
     val platform: String,
     @ColumnInfo(name = "releaseDate")
-    val releaseDate: Date,
+    val releaseDate: String,
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

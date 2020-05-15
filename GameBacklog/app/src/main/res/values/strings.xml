@@ -16,4 +16,16 @@
     <string name="tiletHintGameDateMonth">Month</string>
     <string name="tiletHintGameDateYear">Year</string>
 
+    <!--  Toolbar  -->
+    <string name="title_activity_add_game">Add Game</string>
+
+    <!--  Edittext checks  -->
+    <string name="enterTitle">Please enter a game title.</string>
+    <string name="enterPlatform">Please enter the game platform(s).</string>
+    <string name="enterDay">Please enter a valid release date day.</string>
+    <string name="enterMonth">Please enter a valid release date month.</string>
+    <string name="enterYear">Please enter a valid release date year.</string>
+    <string name="enterValidDate">Please enter a valid date.</string>
+
+
 </resources>

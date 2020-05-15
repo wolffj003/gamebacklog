@@ -13,11 +13,19 @@ class BacklogRepository(context: Context) {
         backlogDao = database!!.backlogDao()
     }
 
-    fun getBacklog(): LiveData<Game?> {
+    fun getBacklog(): LiveData<List<Game>> {
         return backlogDao.getBacklog()
     }
 
-    suspend fun updateBacklog(game: Game) {
-        backlogDao.updateBacklog(game)
+    fun deleteBacklog() {
+        return backlogDao.deleteBacklog()
+    }
+
+    suspend fun insertGame(game: Game) {
+        backlogDao.insertGame(game)
+    }
+
+    suspend fun deleteGame(game: Game) {
+        backlogDao.deleteGame(game)
     }
 }

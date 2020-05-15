@@ -15,7 +15,7 @@ class GameAdapter(private val gameBacklog: ArrayList<Game>) :
         fun bind(game: Game) {
             itemView.gameTitle.text = game.title
             itemView.gamePlatform.text = game.platform
-            itemView.gameReleaseDate.text = game.releaseDate  // Typeconverters
+            itemView.gameReleaseDate.text = game.releaseDate  // Typeconverters? Tostring KAN gewoon niet werken. Toch?
         }
     }
 
