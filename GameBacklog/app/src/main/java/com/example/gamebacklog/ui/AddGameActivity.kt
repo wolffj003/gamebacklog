@@ -46,18 +46,12 @@ class AddGameActivity : AppCompatActivity() {
             return
         }
 
-        if (
-            tiletGameDateDayText.isBlank() or
-            (tiletGameDateDayText.toInt() > 31)
-        ) {
+        if (tiletGameDateDayText.isBlank()) {
             toastError(getString(R.string.enterDay))
             return
         }
 
-        if (
-            tiletGameDateMonthText.isBlank() or
-            (tiletGameDateDayText.toInt() > 12)
-        ) {
+        if (tiletGameDateMonthText.isBlank()) {
             toastError(getString(R.string.enterMonth))
             return
         }
@@ -67,44 +61,39 @@ class AddGameActivity : AppCompatActivity() {
             return
         }
 
-        if (!validDate()) {  // TODO date checking (Zie code beneden)
-            toastError(getString(R.string.enterValidDate))
+        val date = strToDate("$tiletGameDateDayText-$tiletGameDateMonthText-$tiletGameDateYearText")
+        date?.let {
+
+            val game = Game(
+                tiletGameTitleText,
+                tiletGamePlatformText,
+                date
+            )
+            val resultIntent = Intent()
+
+            resultIntent.putExtra(EXTRA_GAME, game)
+            setResult(Activity.RESULT_OK, resultIntent)
+            finish()
+            return
         }
-
-        val gameReleaseDateString =
-            "$tiletGameDateDayText-$tiletGameDateMonthText-$tiletGameDateYearText"
-
-        val game = Game(
-            tiletGameTitleText,
-            tiletGamePlatformText,
-            gameReleaseDateString
-        )
-
-        val resultIntent = Intent()
-
-        resultIntent.putExtra(EXTRA_GAME, game)
-        setResult(Activity.RESULT_OK, resultIntent)
-        finish()
+        toastError(getString(R.string.enterValidDate))
+        return
     }
 
     private fun toastError(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun validDate(date: Date) : Boolean {  // Implement
-        return true
-    }
-
-    private fun strToDate(date: String) : Date? {
-        val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.US)
-        var d: Date? = null
+    private fun strToDate(dateStr: String) : Date? {
+        val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+        formatter.isLenient = false
+        var date: Date? = null
         try {
-            d = formatter.parse(date)
-        } catch (e: ParseException) {  // Parseexception gebeurt miss al als date invalid is (dan bedoel ik invalid als schrikkeljaar of dag die niet bestaat.)
-            // TODO Auto-generated catch block
-            e.printStackTrace()
+            date = formatter.parse(dateStr)
+        } catch (e: ParseException) {
+            return date
         }
 
-        return d
+        return date
     }
 }

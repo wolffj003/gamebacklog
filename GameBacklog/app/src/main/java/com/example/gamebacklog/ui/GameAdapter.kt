@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gamebacklog.R
 import com.example.gamebacklog.model.Game
 import kotlinx.android.synthetic.main.item_game.view.*
+import kotlin.collections.ArrayList
 
 class GameAdapter(private val gameBacklog: ArrayList<Game>) :
     RecyclerView.Adapter<GameAdapter.ViewHolderCard>() {
@@ -15,7 +16,7 @@ class GameAdapter(private val gameBacklog: ArrayList<Game>) :
         fun bind(game: Game) {
             itemView.gameTitle.text = game.title
             itemView.gamePlatform.text = game.platform
-            itemView.gameReleaseDate.text = game.releaseDate  // Typeconverters? Tostring KAN gewoon niet werken. Toch?
+            itemView.gameReleaseDate.text = game.releaseDate.toString()
         }
     }
 
