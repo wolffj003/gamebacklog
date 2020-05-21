@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/tiletHintGamePlatform"
                     android:lines="1"
-                    android:maxLength="28"
+                    android:maxLength="18"
                     android:maxLines="1"
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>

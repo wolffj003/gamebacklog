@@ -2,18 +2,18 @@ package com.example.gamebacklog.ui
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gamebacklog.R
 import com.example.gamebacklog.model.Game
 import kotlinx.android.synthetic.main.activity_main.*
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.ItemTouchHelper
 
 const val ADD_GAME_REQUEST_CODE = 100
 
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var mainActivityViewModel: MainActivityViewModel
 
-    var backlog = arrayListOf<Game>()
+    var sortedBacklog = mutableListOf<Game>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +35,11 @@ class MainActivity : AppCompatActivity() {
         initViewModel()
     }
 
-    private fun initViews() {  // Implement
-        fabAddGame.setOnClickListener { startAddActivity() }  // Activity maken en launchen
+    private fun initViews() {
+        fabAddGame.setOnClickListener { startAddActivity() }
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = GameAdapter(backlog)
+        viewAdapter = GameAdapter(sortedBacklog)
 
         recyclerView = findViewById<RecyclerView>(R.id.rvBacklog).apply {
             setHasFixedSize(true)
@@ -54,8 +54,11 @@ class MainActivity : AppCompatActivity() {
         mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
 
         mainActivityViewModel.backlog.observe(this, Observer { backlog ->
-            this@MainActivity.backlog.clear()
-            this@MainActivity.backlog.addAll(backlog)
+            var sortedBacklog = backlog.sortedWith(compareBy { it.releaseDate })
+            sortedBacklog = sortedBacklog.reversed()
+            this@MainActivity.sortedBacklog.clear()
+            this@MainActivity.sortedBacklog.addAll(sortedBacklog)
+
             viewAdapter.notifyDataSetChanged()
         })
     }
@@ -73,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             when (requestCode) {
                 ADD_GAME_REQUEST_CODE -> {
                     val game = data!!.getParcelableExtra<Game>(EXTRA_GAME)
-                    mainActivityViewModel.insertGame(game)
+                    game?.let { mainActivityViewModel.insertGame(game) }
                 }
             }
         }
@@ -93,7 +96,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                val gameToDelete = backlog[position]
+                val gameToDelete = sortedBacklog[position]
 
                 mainActivityViewModel.deleteGame(gameToDelete)
             }

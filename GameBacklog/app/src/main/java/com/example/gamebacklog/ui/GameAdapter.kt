@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gamebacklog.R
 import com.example.gamebacklog.model.Game
 import kotlinx.android.synthetic.main.item_game.view.*
-import kotlin.collections.ArrayList
 
-class GameAdapter(private val gameBacklog: ArrayList<Game>) :
+class GameAdapter(private val gameBacklog: List<Game>) :
     RecyclerView.Adapter<GameAdapter.ViewHolderCard>() {
 
     class ViewHolderCard(cardViewText: View) : RecyclerView.ViewHolder(cardViewText) {
